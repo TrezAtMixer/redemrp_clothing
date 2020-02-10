@@ -770,15 +770,24 @@ Citizen.CreateThread(function()
 	Wait(0)
 		local playerPed = PlayerPedId()
 		local coords = GetEntityCoords(playerPed)
-	for k,v in pairs(Config.Zones) do
-			if Vdist(coords, v) < 2 then
+    for k,v in pairs(Config.Zones) do
+
+            local _distance = Vdist(coords, v)
+            if _distance < 5 then
+                DrawMarker(-1795314153, v.x, v.y + 0.5, v.z - 1, 0, 0, 0, 0, 0, 0, 1.3, 1.3, .5, 0, 93, 0, 155, 0, 0, 2, 0, 0, 0, 0)
+            end
+
+            if _distance < 2 then
 				DrawTxt(Config.Shoptext, 0.50, 0.95, 0.6, 0.6, true, 255, 255, 255, 255, true, 10000)
 				if IsControlJustReleased(0, Config.OpenKey) then
 					TriggerServerEvent("redemrp_clothing:loadClothes", 2, function(cb)
-								end)
+					end)
 				end
 			end
 		end
 	end
 end)
 
+function DrawMarker(hash, x, y, z, dx, dy, dz, rx, ry, rz, sx, sy, sz, r,g ,b, a, bob, face, p19, rotate, tDict, tName, drawOnEnt)
+	Citizen.InvokeNative(0x2A32FAA57B937173, hash, x, y, z, dx, dy, dz, rx, ry, rz, sx, sy, sz, r, g, b, a, bob, face, p19, rotate, tDict, tName, drawOnEnt)
+end
